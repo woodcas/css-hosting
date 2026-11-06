@@ -177,51 +177,21 @@ textarea.error, textarea.invalid {
   border-color: var(--f-error);
 }
 
-/* Hinweis- und Fehlertexte (z. B. „max. 100 Zeichen erlaubt“)
-   zunächst ausblenden. Elemente, die selbst Felder enthalten,
-   bleiben ausgenommen, damit kein ganzer Feldblock verschwindet. */
-:is(
-  .hint, .help, .help-text, .info, .field-hint, .field-info,
-  .error-message, .validation-message, .invalid-feedback,
-  [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]
-):not(:has(input, textarea, select, button)) {
+/* SmartWe-Hinweistexte (<div class="errordiv">, z. B. „max. 30 Zeichen erlaubt“)
+   zunächst ausblenden. Bewusst ohne !important: Die Prüfung von SmartWe
+   blendet den Text beim Absenden per Inline-Style wieder ein. */
+form .table .table-row .errordiv,
+form .errordiv {
   display: none;
   margin: -0.8rem 0 1.1rem;
   color: var(--f-error);
   font-size: 0.9rem;
 }
 
-/* Einblenden, sobald das zugehörige Feld ungültig ist */
-:is(input, textarea, select):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid)
-  ~ :is(.hint, .help, .help-text, .info, .field-hint, .field-info, .error-message, .validation-message, .invalid-feedback, [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]),
-:has(> :is(input, textarea, select):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid))
-  > :is(.hint, .help, .help-text, .info, .field-hint, .field-info, .error-message, .validation-message, .invalid-feedback, [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]),
-:is(.error, .invalid, .has-error)
-  > :is(.hint, .help, .help-text, .info, .field-hint, .field-info, .error-message, .validation-message, .invalid-feedback, [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]) {
-  display: block;
-}
-
-/* Hinweistexte ohne bekannte Klasse: alles, was direkt auf ein
-   Textfeld folgt und kein Feld oder Label ist, sowie typische
-   Bootstrap-Hilfetexte (.form-text, small). */
-:is(input, textarea) + :not(label, input, textarea, select, button, br, fieldset, table, div:has(input, textarea, select)),
-:is(input, textarea) ~ :is(.form-text, small, .text-muted),
-:has(> :is(input, textarea)) + :is(.form-text, small, .text-muted, span, p):not(:has(input, textarea, select, label)) {
-  display: none;
-  margin: -0.8rem 0 1.1rem;
-  color: var(--f-error);
-  font-size: 0.9rem;
-}
-
-input.is-invalid, textarea.is-invalid { border-color: var(--f-error); }
-
-/* Einblenden bei ungültigem Feld */
-:is(input, textarea):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid, .is-invalid)
-  + :not(label, input, textarea, select, button, br, fieldset, table, div:has(input, textarea, select)),
-:is(input, textarea):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid, .is-invalid)
-  ~ :is(.form-text, small, .text-muted, .invalid-feedback),
-:has(> :is(input, textarea):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid, .is-invalid))
-  + :is(.form-text, small, .text-muted, span, p):not(:has(input, textarea, select, label)) {
+/* Einblenden, sobald SmartWe die Zeile oder den Text als Fehler markiert */
+form .table .table-row .errordiv:is(.visible, .show, .active, .error, [style*="block"], [style*="visible"]),
+form .table .table-row:is(.error, .invalid, .has-error) .errordiv,
+form .table .table-row:has(:is(input, textarea, select):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid)) .errordiv {
   display: block;
 }
 
