@@ -1,0 +1,189 @@
+/* ==========================================================
+   Stylesheet für das SmartWe-Onlineformular
+   Farben und Schrift oben in :root an die eigene Website anpassen.
+   ========================================================== */
+
+:root {
+  --f-text:        #1f2a37;
+  --f-text-muted:  #5b6675;
+  --f-bg:          #ffffff;
+  --f-field-bg:    #f7f8fa;  
+  --f-border:      #cfd5dd;
+  --f-accent:      #0a5fb4;   /* Hauptfarbe: Buttons, Fokus, Häkchen */
+  --f-accent-dark: #084a8c;
+  --f-error:       #c0392b;
+  --f-radius:      6px;
+  --f-font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Grundlayout */
+html, body {
+  margin: 0;
+  background: var(--f-bg) !important;
+  color: var(--f-text);
+  font-family: var(--f-font) !important;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+form {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Überschriften und Texte */
+h1, h2, h3, h4, legend {
+  font-family: var(--f-font) !important;
+  color: var(--f-text);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 0.75em;
+}
+h1 { font-size: 1.6rem; }
+h2 { font-size: 1.3rem; }
+h3, legend { font-size: 1.1rem; }
+
+p, td, th, span, div { font-family: var(--f-font) !important; }
+
+/* Gruppen */
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+/* Beschriftungen */
+label {
+  display: inline-block;
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--f-text);
+}
+
+/* Eingabefelder */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="url"],
+input[type="password"],
+input:not([type]),
+select,
+textarea {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  margin: 0 0 1.1rem;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--f-text);
+  background: var(--f-field-bg);
+  border: 1px solid var(--f-border);
+  border-radius: var(--f-radius);
+  box-shadow: none;
+  transition: border-color .15s, box-shadow .15s, background-color .15s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Pfeil für Auswahllisten */
+select {
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235b6675' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+input:hover, select:hover, textarea:hover { border-color: #a9b2bd; }
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  background-color: #fff;
+  border-color: var(--f-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--f-accent) 20%, transparent);
+}
+
+::placeholder { color: #98a1ad; opacity: 1; }
+
+/* Checkboxen und Radiobuttons */
+input[type="checkbox"],
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0 8px 0 0;
+  vertical-align: -3px;
+  accent-color: var(--f-accent);
+  cursor: pointer;
+}
+
+/* Buttons */
+button,
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 12px 28px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff !important;
+  background: var(--f-accent) !important;
+  border: 0;
+  border-radius: var(--f-radius);
+  cursor: pointer;
+  transition: background-color .15s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover { background: var(--f-accent-dark) !important; }
+
+button:focus-visible,
+input[type="submit"]:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--f-accent) 40%, transparent);
+  outline-offset: 2px;
+}
+
+input[type="reset"] {
+  color: var(--f-text) !important;
+  background: transparent !important;
+  border: 1px solid var(--f-border);
+}
+
+/* Fehlerzustände */
+input:invalid:not(:placeholder-shown),
+textarea:invalid:not(:placeholder-shown),
+.error input, .invalid input,
+input.error, input.invalid {
+  border-color: var(--f-error);
+}
+.error, .error-message, .validation-message {
+  color: var(--f-error);
+  font-size: 0.9rem;
+}
+
+/* Alte Tabellenlayouts glätten */
+table { width: 100%; border-collapse: collapse; }
+td, th { padding: 4px 0; vertical-align: top; text-align: left; }
+
+/* Mobil */
+@media (max-width: 520px) {
+  form { padding: 16px 12px; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  button, input[type="submit"] { width: 100%; }
+}
