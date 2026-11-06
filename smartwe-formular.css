@@ -2,7 +2,7 @@
    Stylesheet für das SmartWe-Onlineformular
    Farben und Schrift oben in :root an die eigene Website anpassen.
    ========================================================== */
-
+   
 :root {
   --f-text:        #1f2a37;
   --f-text-muted:  #5b6675;
