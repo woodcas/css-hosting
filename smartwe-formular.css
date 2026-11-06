@@ -7,7 +7,7 @@
   --f-text:        #1f2a37;
   --f-text-muted:  #5b6675;
   --f-bg:          #ffffff;
-  --f-field-bg:    #f7f8fa;  
+  --f-field-bg:    #f7f8fa;
   --f-border:      #cfd5dd;
   --f-accent:      #0a5fb4;   /* Hauptfarbe: Buttons, Fokus, Häkchen */
   --f-accent-dark: #084a8c;
@@ -165,16 +165,40 @@ input[type="reset"] {
   border: 1px solid var(--f-border);
 }
 
-/* Fehlerzustände */
+/* Fehlerzustände: roter Rahmen am Feld */
 input:invalid:not(:placeholder-shown),
 textarea:invalid:not(:placeholder-shown),
-.error input, .invalid input,
-input.error, input.invalid {
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+.error input, .invalid input, .has-error input,
+.error textarea, .invalid textarea, .has-error textarea,
+input.error, input.invalid,
+textarea.error, textarea.invalid {
   border-color: var(--f-error);
 }
-.error, .error-message, .validation-message {
+
+/* Hinweis- und Fehlertexte (z. B. „max. 100 Zeichen erlaubt“)
+   zunächst ausblenden. Elemente, die selbst Felder enthalten,
+   bleiben ausgenommen, damit kein ganzer Feldblock verschwindet. */
+:is(
+  .hint, .help, .help-text, .info, .field-hint, .field-info,
+  .error-message, .validation-message, .invalid-feedback,
+  [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]
+):not(:has(input, textarea, select, button)) {
+  display: none;
+  margin: -0.8rem 0 1.1rem;
   color: var(--f-error);
   font-size: 0.9rem;
+}
+
+/* Einblenden, sobald das zugehörige Feld ungültig ist */
+:is(input, textarea, select):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid)
+  ~ :is(.hint, .help, .help-text, .info, .field-hint, .field-info, .error-message, .validation-message, .invalid-feedback, [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]),
+:has(> :is(input, textarea, select):is(:invalid:not(:placeholder-shown), [aria-invalid="true"], .error, .invalid))
+  > :is(.hint, .help, .help-text, .info, .field-hint, .field-info, .error-message, .validation-message, .invalid-feedback, [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]),
+:is(.error, .invalid, .has-error)
+  > :is(.hint, .help, .help-text, .info, .field-hint, .field-info, .error-message, .validation-message, .invalid-feedback, [class*="hint"], [class*="error"], [class*="validation"], [class*="message"]) {
+  display: block;
 }
 
 /* Alte Tabellenlayouts glätten */
